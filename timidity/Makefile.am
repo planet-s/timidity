@@ -82,6 +82,7 @@ timidity_SOURCES = \
 	readmidi.h \
 	recache.c \
 	recache.h \
+	redox_a.c \
 	resample.c \
 	resample.h \
 	reverb.c \
