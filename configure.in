@@ -233,7 +233,7 @@ case "$target" in
     EXTRADEFS="-D__W32__"
     # ??
     case "x${CC} " in
-      "xbcc32 "*|xbcc32) 
+      "xbcc32 "*|xbcc32)
 #        test -n "$SHLD" || SHLD="tlink32 -Tpd"
         test -n "$SHLD" || SHLD="BCC32 -WD"
         BORLANDC=yes
@@ -242,7 +242,7 @@ case "$target" in
         CFLAGS="$CFLAGS  -tWM -VM"
         EXTRADEFS="$EXTRADEFS -D_WINDOWS -DWIN32"
         ;;
-      "xcc "*|xcc) 
+      "xcc "*|xcc)
         test -n "$SHLD" || SHLD="polink -DLL"
         POCC=yes
          case " $CFLAGS " in
@@ -254,7 +254,7 @@ case "$target" in
         CFLAGS="$CFLAGS -Ze -D__POCC__OLDNAMES"
         EXTRADEFS="$EXTRADEFS -D_WINDOWS -DWIN32"
         ;;
-      "xdmc "*|xdmc) 
+      "xdmc "*|xdmc)
         test -n "$SHLD" || SHLD="dmc -WD"
         DMC=yes
         DMC_LDFLAGS="winmm.lib ws2_32.lib user32.lib kernel32.lib shell32.lib gdi32.lib comctl32.lib comdlg32.lib ole32.lib advapi32.lib"
@@ -269,7 +269,7 @@ case "$target" in
          WATCOM_LDFLAGS=
          EXTRALIBS="$EXTRALIBS kernel32.lib winspool.lib comdlg32.lib advapi32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ws2_32.lib user32.lib shell32.lib"
          ;;
-      "xcl "*|xcl) 
+      "xcl "*|xcl)
          test -n "$SHLD" || SHLD="link -dll"
          VCPP=yes
          case " $CFLAGS " in
@@ -412,7 +412,7 @@ fail;
   "xaw")
     AC_CHECK_LIB(Xaw,XawInitializeWidgetSet,have_xaw=yes,have_xaw=no)
     ;;
-  "xaw3d") 
+  "xaw3d")
     AC_CHECK_LIB(Xaw3d,XawInitializeWidgetSet,
       [ have_xaw=3d;
           AC_CHECK_HEADER(X11/Xaw3d/Tip.h,
@@ -559,7 +559,7 @@ fi
 dnl Cygnus and Mingw memory struct optiontest
 if test "x$MSYS" = xyes ; then
 	case "x${CC}" in
-	"xgcc"*) 
+	"xgcc"*)
 		msnative_struct=''
 	    AC_MSG_CHECKING([how to get MSVC-compatible struct packing])
 	    if test -z "$ac_cv_prog_CC"; then
@@ -588,7 +588,7 @@ if test "x$MSYS" = xyes ; then
 			AC_MSG_RESULT([${msnative_struct}])
 		fi
 		;;
-	*) 
+	*)
 		;;
 	esac
 fi
@@ -706,43 +706,8 @@ dnl ***
 dnl *** va_copy checks (from GLIB)
 dnl ***
 
-AC_CACHE_CHECK([for an implementation of va_copy()],lib_cv_va_copy,[
-	AC_RUN_IFELSE([AC_LANG_SOURCE([[
-	#include <stdarg.h>
-	void f (int i, ...) {
-	va_list args1, args2;
-	va_start (args1, i);
-	va_copy (args2, args1);
-	if (va_arg (args2, int) != 42 || va_arg (args1, int) != 42)
-	  exit (1);
-	va_end (args1); va_end (args2);
-	}
-	int main() {
-	  f (0, 42);
-	  return 0;
-	}]])],
-	[lib_cv_va_copy=yes],
-	[lib_cv_va_copy=no],[])
-])
-
-AC_CACHE_CHECK([for an implementation of __va_copy()],lib_cv___va_copy,[
-	AC_RUN_IFELSE([AC_LANG_SOURCE([[
-	#include <stdarg.h>
-	void f (int i, ...) {
-	va_list args1, args2;
-	va_start (args1, i);
-	__va_copy (args2, args1);
-	if (va_arg (args2, int) != 42 || va_arg (args1, int) != 42)
-	  exit (1);
-	va_end (args1); va_end (args2);
-	}
-	int main() {
-	  f (0, 42);
-	  return 0;
-	}]])],
-	[lib_cv___va_copy=yes],
-	[lib_cv___va_copy=no],[])
-])
+lib_cv_va_copy=yes
+lib_cv___va_copy=no
 
 if test "x$lib_cv_va_copy" = "xyes"; then
   va_copy_func=va_copy
@@ -755,24 +720,7 @@ if test -n "$va_copy_func"; then
   AC_DEFINE_UNQUOTED(VA_COPY,$va_copy_func,[A 'va_copy' style function])
 fi
 
-AC_CACHE_CHECK([whether va_lists can be copied by value],lib_cv_va_val_copy,[
-	AC_RUN_IFELSE([AC_LANG_SOURCE([[
-	#include <stdarg.h>
-	void f (int i, ...) {
-	va_list args1, args2;
-	va_start (args1, i);
-	args2 = args1;
-	if (va_arg (args2, int) != 42 || va_arg (args1, int) != 42)
-	  exit (1);
-	va_end (args1); va_end (args2);
-	}
-	int main() {
-	  f (0, 42);
-	  return 0;
-	}]])],
-	[lib_cv_va_val_copy=yes],
-	[lib_cv_va_val_copy=no],[])
-])
+lib_cv___va_copy=no
 
 if test "x$lib_cv_va_val_copy" = "xno"; then
   AC_DEFINE(VA_COPY_AS_ARRAY,1, ['va_lists' cannot be copies as values])
@@ -792,7 +740,7 @@ if test "x$MSYS" = xyes ; then
   esac
   if test "x$VCPP" = xyes || test "x$BORLANDC" = xyes || test "x$WATCOM_C" = xyes || test "x$DMC" = xyes || test "x$POCC" = xyes; then
     EXTRALIBS="$EXTRALIBS  ws2_32.lib"
-    EXTRADEFS="$EXTRADEFS -DWINSOCK" 
+    EXTRADEFS="$EXTRADEFS -DWINSOCK"
   else
     AC_CHECK_FUNC(socket,,
      WAPI_CHECK_LIB(ws2_32,WSAStartup,
@@ -1377,7 +1325,7 @@ AC_MSG_CHECKING(enable_audio=vorbis)
 if test "x$au_enable_vorbis" = xyes; then
   AC_MSG_RESULT([yes, configuring vorbis])
   if test "x$MSYS" = "xyes" && test "x$MINGWGCC" != "xyes" ; then
-    AC_CHECK_HEADER(vorbis/vorbisenc.h,, [ 
+    AC_CHECK_HEADER(vorbis/vorbisenc.h,, [
     EXTRADEFS="-DAU_VORBIS_DLL $EXTRADEFS"
 	SYSEXTRAS="$SYSEXTRAS w32g_vorbisenc_dll.c w32g_vorbis_dll.c w32g_ogg_dll.c"
     ])
@@ -1410,10 +1358,10 @@ if test "x$MSYS" = xyes ; then
   if test "x$au_enable_flac" = xyes; then
     AC_MSG_RESULT([yes, configuring flac])
     SYSEXTRAS="$SYSEXTRAS flac_a.c w32_libFLAC_dll.c w32_libOggFLAC_dll.c"
-    AC_CHECK_HEADER(FLAC/all.h, [ 
+    AC_CHECK_HEADER(FLAC/all.h, [
       EXTRADEFS="$EXTRADEFS -DAU_FLAC -DAU_FLAC_DLL"
     ])
-    AC_CHECK_HEADER(OggFLAC/all.h, [ 
+    AC_CHECK_HEADER(OggFLAC/all.h, [
       EXTRADEFS="$EXTRADEFS -DAU_OGGFLAC -DAU_OGGFLAC_DLL"
     ])
 dnl    AM_PATH_LIBFLAC([
@@ -1478,7 +1426,7 @@ if test "x$au_enable_gogo" = xyes; then
   else
     AC_MSG_WARN(May be gogo is not supported.  You need hack the gogo_a.c)
   fi
-  AC_CHECK_HEADER(gogo/gogo.h, [ 
+  AC_CHECK_HEADER(gogo/gogo.h, [
     have_gogo=yes
   ])
   SYSEXTRAS="$SYSEXTRAS gogo_a.c w32_gogo.c"
@@ -1515,7 +1463,7 @@ case ".$DEFAULT_PLAYMODE" in
   .nas)      TIMIDITY_OUTPUT_ID=n ;;
   .arts)     TIMIDITY_OUTPUT_ID=R ;;
   .esd)      TIMIDITY_OUTPUT_ID=e ;;
-  .portaudio)      TIMIDITY_OUTPUT_ID=p ;;  
+  .portaudio)      TIMIDITY_OUTPUT_ID=p ;;
   .npipe)    TIMIDITY_OUTPUT_ID=N ;;
   .wav)      TIMIDITY_OUTPUT_ID=w ;;
   .au)       TIMIDITY_OUTPUT_ID=u ;;
@@ -2044,7 +1992,7 @@ CONFIG_INTERFACE(winsyng,W32G_SYN,W,
   AS_HELP_STRING([--enable-winsyng], [Enable Windows GUI Synthesizer interface
                                                           (default is no)]),
   ,
-  [ 
+  [
   W32G_GUI=yes
   if test "x$VCPP" = xyes || test "x$BORLANDC" = xyes || test "x$WATCOM_C" = xyes || test "x$DMC" = xyes || test "x$POCC" = xyes; then
     INTERFACE_SRCS="$INTERFACE_SRCS w32g_ini.c w32g_pref.c w32g_syn.c w32g_utl.c winsyn_c.c rtsyn_common.c rtsyn_winmm.c"
@@ -2084,7 +2032,7 @@ CONFIG_INTERFACE(w32gui, W32GUI, w,
   AS_HELP_STRING([--enable-w32gui], [Enable Windows GUI interface    (default is no)]),
   ,
   [
-  W32G_GUI=yes 
+  W32G_GUI=yes
   if test "x$VCPP" = xyes || test "x$BORLANDC" = xyes || test "x$WATCOM_C" = xyes || test "x$DMC" = xyes || test "x$POCC" = xyes; then
  	INTERFACE_SRCS="$INTERFACE_SRCS w32g_c.c w32g_ini.c w32g_i.c w32g_playlist.c w32g_utl.c w32g_pref.c w32g_subwin.c w32g_subwin2.c w32g_subwin3.c w32g_ut2.c w32g_dib.c  wrdt_w32g.c w32g_mag.c"
     lib_w32gui_opt='gdi32.lib comctl32.lib comdlg32.lib ole32.lib'
