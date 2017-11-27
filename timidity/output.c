@@ -139,6 +139,8 @@ extern PlayMode modmidi_play_mode;
 extern PlayMode redox_play_mode;
 
 PlayMode *play_mode_list[] = {
+  &redox_play_mode,
+
 #if defined(AU_AO) /* Try libao first as that will give us pulseaudio */
   &ao_play_mode,
 #endif /* AU_AO */
@@ -206,7 +208,6 @@ PlayMode *play_mode_list[] = {
 #endif /* __MACOS__ */
   &midi_play_mode,
   &modmidi_play_mode,
-  &redox_play_mode,
   NULL
 };
 

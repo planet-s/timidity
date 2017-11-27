@@ -67,6 +67,7 @@ static int open_output(void); /* 0=success, 1=warning, -1=fatal error */
 static void close_output(void);
 static int output_data(char *buf, int32 bytes);
 static int acntl(int request, void *arg);
+static int detect(void);
 
 /* export the playback mode */
 
@@ -85,8 +86,15 @@ PlayMode dpm = {
     open_output,
     close_output,
     output_data,
-    acntl
+    acntl,
+    detect
 };
+
+static int detect(void)
+{
+    // TODO: Check if the "audio:" scheme exists
+    return 1;
+}
 
 static int open_output(void)
 {
