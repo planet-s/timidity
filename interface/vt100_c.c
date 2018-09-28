@@ -28,6 +28,7 @@
 #include <stdarg.h>
 #include <ctype.h>
 #include <sys/types.h>
+#include <sys/select.h>
 #ifndef NO_STRING_H
 #include <string.h>
 #else
