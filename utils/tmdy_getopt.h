@@ -69,7 +69,7 @@ extern int getopt (int __argc, char *const *__argv, const char *__shortopts);
 /* gtopt_long() declared here */
 #include <getopt.h>
 
-#if 1
+#if __POCC__
 struct option {
 const char *name;
 int has_arg;
